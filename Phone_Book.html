@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Book</title>
+    <style>
+        *
+        {
+            padding: 0%;
+            margin: 0%;
+            
+        }
+        input[type=text]
+        {
+            width: 300px;
+            height: 40px;
+            margin: 10px;
+            border-radius: 20px;
+        }
+        input:not([type=text])
+        {
+            width: 200px;
+            height: 40px;
+            border-radius: 20px;
+        }   
+        form
+        {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            
+            width: 100%;
+            height: 300px;;
+            margin: auto;
+            font-size: large;
+            /* margin-top: 20px; */
+        }
+        label
+        {
+            margin: 20px;
+        }
+        #heading
+        {
+            grid-column: 1/span 2;
+            margin: auto;
+        }
+        .one
+        {
+            display: flex;
+            flex-direction: row;
+            /* width: 50%; */
+            margin: 20px auto;
+            /* justify-content: space-evenly; */
+            gap: 100px;
+        
+        }
+        .table
+        {
+            width: 50%;
+            margin: auto;
+            display: flex;
+            justify-content: center;
+            font-size: large;
+            padding: 10px;
+            
+        }
+        th,td{
+            padding: 10px;
+            border: 1px solid black;
+        }
+        table
+        {
+            border-collapse: collapse;
+        }
+#two
+{
+    border: 2px solid black;
+    width: 50%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 50px;
+}
+    </style>
+</head>
+<body>
+  <div id="two">
+    <form name="frm" action="" method="post">
+        <h1 id="heading">Phone Book</h1>
+        <label>Name:</label><input type="text" id="n" name="name" value="" placeholder="Name"/>
+        <label>Primary Number:</label><input type="text" id="p" name="Primary Number" value="" placeholder="Primaty Number"/>
+        <label>Secondary Number:</label><input type="text" id="s" name="Secondary Number" value="" placeholder="Secondary Number"/>
+        
+    </form>
+        <div class="one">
+        <input  type="submit" value="Clean" onclick="n.value='',p.value='',s.value=''"/>
+        <input type="submit" value="Save" onclick="addData(n.value,p.value,s.value)"/>
+        <img src="edit.png" alt="">
+        <img src="delete_icon.png" alt="">
+    </div>
+</div>
+    <div class="table">
+        <table id="table">
+
+        </table>
+
+    </div>
+    <script type="text/javascript">
+        var list=[];
+
+        var setData = (n,p,s) => {
+            var obj = {
+                name:'',
+                prno:'',
+                secno:''
+            }
+            obj.name = n;
+            obj.prno = p;
+            obj.secno = s;
+            clear();
+            return obj;
+        }
+        var addData =(n,p,s) => {
+            list.push(setData(n,p,s));
+            showTable();
+        }
+        var showTable = () => {
+            let tbl = document.getElementById('table')
+            tbl.innerHTML = '<tr><th>Name</th><th>Primary Number</th><th>Secodary Number</th><th>Edit</th><th>remove</th></tr>'
+            list.forEach((element,index) => {
+                let row = tbl.insertRow();
+
+                let d1 = row.insertCell(0);
+                let d2 = row.insertCell(1);
+                let d3 = row.insertCell(2);
+                let d4 = row.insertCell(3);
+                let d5 = row.insertCell(4);
+
+                d1.innerHTML = element.name;
+                d2.innerHTML = element.prno;
+                d3.innerHTML = element.secno;
+                d4.innerHTML = '<img src="edit.png" alt="">';
+                d5.innerHTMl = '<img src="delete_icon.png" alt="">';
+            });
+        }
+        var remove = (index) => {
+            list.splice(index,1);
+            showTable();
+        }
+
+        var edit = (index) => {
+            let n_in = document.getElementById('n');
+            let p_in = document.getElementById('p');
+            let s_in = document.getElementById('s');
+
+            remove(index);
+            showTable();
+
+        }
+
+         var clear = () => {
+            document.getElementById('n').value ='';
+            document.getElementById('p').value='';
+            document.getElementById('s').value='';
+           
+         }
+         showTable();
+    </script>
+</body>
+</html>
